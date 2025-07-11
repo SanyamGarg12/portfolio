@@ -1,65 +1,85 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { FaLinkedinIn, FaGithub, FaEnvelope } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const SERVICE_ID = 'service_xd3yji8';
 const TEMPLATE_ID = 'template_iqd9xol';
 const PUBLIC_KEY = 'K79mtYKSKJ6NwoScb';
 
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandomOperator() {
+  const ops = ['+', '-', '*'];
+  return ops[getRandomInt(0, ops.length - 1)];
+}
+
+function computeAnswer(a, b, op) {
+  switch (op) {
+    case '+': return a + b;
+    case '-': return a - b;
+    case '*': return a * b;
+    default: return 0;
+  }
+}
+
 const Contact = () => {
   const form = useRef();
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
-  const { executeRecaptcha } = useGoogleReCaptcha();
+  const [a, setA] = useState(0);
+  const [b, setB] = useState(0);
+  const [op, setOp] = useState('+');
+  const [userAnswer, setUserAnswer] = useState('');
+  const [mathError, setMathError] = useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
     Aos.init({ duration: 800, offset: 120 });
+    generateNewQuestion();
+    // eslint-disable-next-line
   }, []);
 
-  const sendEmail = async (e) => {
+  const generateNewQuestion = () => {
+    const num1 = getRandomInt(1, 20);
+    const num2 = getRandomInt(1, 20);
+    const operator = getRandomOperator();
+    setA(num1);
+    setB(num2);
+    setOp(operator);
+    setUserAnswer('');
+    setMathError('');
+  };
+
+  const sendEmail = (e) => {
     e.preventDefault();
     setStatus('');
     setLoading(true);
+    setMathError('');
 
-    if (!executeRecaptcha) {
-      setStatus('reCAPTCHA not yet available');
+    const correct = computeAnswer(a, b, op);
+    if (parseInt(userAnswer, 10) !== correct) {
+      setMathError('Incorrect answer. Please try again.');
       setLoading(false);
+      generateNewQuestion();
       return;
     }
 
-    try {
-      const token = await executeRecaptcha('contact_form');
-      // Set the token in a hidden input
-      if (form.current) {
-        let tokenInput = form.current.querySelector('input[name="recaptcha_token"]');
-        if (!tokenInput) {
-          tokenInput = document.createElement('input');
-          tokenInput.type = 'hidden';
-          tokenInput.name = 'recaptcha_token';
-          form.current.appendChild(tokenInput);
+    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
+      .then(
+        (result) => {
+          setStatus('Message sent successfully!');
+          setLoading(false);
+          form.current.reset();
+          generateNewQuestion();
+        },
+        (error) => {
+          setStatus('Failed to send message. Please try again.');
+          setLoading(false);
         }
-        tokenInput.value = token;
-      }
-
-      emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
-        .then(
-          (result) => {
-            setStatus('Message sent successfully!');
-            setLoading(false);
-            form.current.reset();
-          },
-          (error) => {
-            setStatus('Failed to send message. Please try again.');
-            setLoading(false);
-          }
-        );
-    } catch (err) {
-      setStatus('reCAPTCHA failed. Please try again.');
-      setLoading(false);
-    }
+      );
   };
 
   return (
@@ -106,7 +126,18 @@ const Contact = () => {
           rows={5}
           className="w-full px-4 py-3 rounded-lg bg-black border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-blue-400 transition resize-none"
         />
-        {/* Hidden input for reCAPTCHA token will be added dynamically */}
+        {/* Math CAPTCHA */}
+        <div className="flex flex-col gap-2">
+          <label className="text-gray-300 font-mono">Solve: {a} {op} {b} = ?</label>
+          <input
+            type="number"
+            value={userAnswer}
+            onChange={e => setUserAnswer(e.target.value)}
+            className="w-32 px-3 py-2 rounded bg-black border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-blue-400 transition"
+            required
+          />
+          {mathError && <span className="text-red-400 text-sm">{mathError}</span>}
+        </div>
         <button
           type="submit"
           disabled={loading}
