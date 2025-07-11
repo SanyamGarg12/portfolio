@@ -1,10 +1,7 @@
-import React from "react";
-import { Box, Typography, Card, CardContent, Grid, Chip, IconButton } from "@mui/material";
-import { motion } from "framer-motion";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import LaunchIcon from "@mui/icons-material/Launch";
-
-const MotionCard = motion(Card);
+import React, { useEffect } from 'react';
+import Aos from 'aos';
+import 'aos/dist/aos.css';
+import { FaGithub } from 'react-icons/fa';
 
 const projects = [
   {
@@ -17,7 +14,7 @@ const projects = [
     title: "Drug-Drug Similarity Model",
     subtitle: "Translational Biology Lab, IIIT Delhi",
     techStack: ["Machine Learning", "Molecular Descriptors", "ChEMBL"],
-    description: "Built drug database by extracting SMILES structures and features from ChEMBL IDs. Engineered feature set using 1829 molecular descriptors and 7 fingerprint types. Developed ML models achieving 97% accuracy and 0.9 AUC across cancer, neurogenesis, and natural compounds datasets.",
+    description: "Developed advanced ensembled models to accurately predict drug similarity based on molecular target sites, enabling new insights for drug discovery. Leveraged Optuna for hyperparameter optimization and engineered a robust feature set from ChEMBL data. Achieved 97% accuracy and 0.9 AUC across diverse biomedical datasets.",
     github: null
   },
   {
@@ -47,121 +44,63 @@ const projects = [
 ];
 
 const ProjectCard = ({ project, index }) => (
-  <MotionCard
-    elevation={3}
-    sx={{
-      height: '100%',
-      borderRadius: 4,
-      overflow: 'hidden',
-      transition: 'all 0.3s ease-in-out',
-      '&:hover': {
-        transform: 'translateY(-8px)',
-        boxShadow: '0 12px 20px -10px rgba(0,0,0,0.2)',
-      }
-    }}
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: index * 0.1 }}
+  <div
+    className="w-full bg-boxColor border-l-4 border-yellowColor rounded-lg shadow-lg p-6 mb-8 hover:shadow-2xl transition-shadow duration-300"
+    data-aos="fade-up"
+    data-aos-delay={index * 100}
   >
-    <CardContent sx={{ p: 4 }}>
-      <Typography
-        variant="h5"
-        component="h3"
-        sx={{
-          fontWeight: 700,
-          mb: 1,
-          background: 'linear-gradient(45deg, #2563eb 30%, #7c3aed 90%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}
-      >
-        {project.title}
-      </Typography>
-      
-      {project.subtitle && (
-        <Typography
-          variant="subtitle1"
-          color="text.secondary"
-          sx={{ mb: 2, fontWeight: 500 }}
-        >
-          {project.subtitle}
-        </Typography>
-      )}
-
-      <Box sx={{ mb: 3, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-        {project.techStack.map((tech) => (
-          <Chip
-            key={tech}
-            label={tech}
-            size="small"
-            sx={{
-              backgroundColor: 'primary.light',
-              color: 'white',
-              '&:hover': {
-                backgroundColor: 'primary.main',
-              }
-            }}
-          />
-        ))}
-      </Box>
-
-      <Typography
-        variant="body1"
-        color="text.secondary"
-        sx={{ mb: 3, lineHeight: 1.7 }}
-      >
-        {project.description}
-      </Typography>
-
+    <div className="flex flex-col xl:flex-row gap-4 xl:gap-0 justify-between mb-2">
+      <div>
+        <h3 className="text-2xl font-bold text-white mb-1">{project.title}</h3>
+        {project.subtitle && (
+          <p className="text-yellowColor font-semibold mb-2">{project.subtitle}</p>
+        )}
+      </div>
       {project.github && (
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <IconButton
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={{
-              color: 'primary.main',
-              '&:hover': {
-                backgroundColor: 'primary.light',
-                color: 'white',
-              }
-            }}
-          >
-            <GitHubIcon />
-          </IconButton>
-        </Box>
+        <a
+          href={project.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-yellowColor hover:text-white text-2xl mt-2 xl:mt-0 transition-colors duration-300"
+        >
+          <FaGithub />
+        </a>
       )}
-    </CardContent>
-  </MotionCard>
+    </div>
+    <div className="flex flex-wrap gap-2 mb-4">
+      {project.techStack.map((tech, techIndex) => (
+        <span
+          key={techIndex}
+          className="text-xs md:text-sm text-yellowColor border border-yellowColor rounded-full px-2 py-1 bg-black bg-opacity-30"
+        >
+          {tech}
+        </span>
+      ))}
+    </div>
+    <p className="text-gray-300 text-base leading-relaxed">
+      {project.description}
+    </p>
+  </div>
 );
 
 const Projects = () => {
-  return (
-    <Box id="projects" sx={{ mb: 6 }}>
-      <Typography
-        variant="h4"
-        component="h2"
-        gutterBottom
-        sx={{
-          fontWeight: 700,
-          mb: 4,
-          textAlign: 'center',
-          background: 'linear-gradient(45deg, #2563eb 30%, #7c3aed 90%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}
-      >
-        Projects
-      </Typography>
+  useEffect(() => {
+    Aos.init({ duration: 800, offset: 120 });
+  }, []);
 
-      <Grid container spacing={3}>
+  return (
+    <section id="projects" className="w-full py-20 border-b-[1px] border-b-black bg-bodyColor">
+      <div className="flex justify-center items-center text-center mb-12">
+        <h1 className="text-4xl font-bold text-white">
+          My <span className="text-yellowColor">Projects</span>
+        </h1>
+      </div>
+      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
         {projects.map((project, index) => (
-          <Grid item xs={12} md={6} key={index}>
-            <ProjectCard project={project} index={index} />
-          </Grid>
+          <ProjectCard key={index} project={project} index={index} />
         ))}
-      </Grid>
-    </Box>
+      </div>
+    </section>
   );
 };
 

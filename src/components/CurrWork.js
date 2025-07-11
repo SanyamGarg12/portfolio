@@ -1,13 +1,7 @@
-import React from 'react';
-import { Box, Typography, Card, CardContent, Grid, Chip } from '@mui/material';
-import { motion } from 'framer-motion';
-import WorkIcon from '@mui/icons-material/Work';
-import CodeIcon from '@mui/icons-material/Code';
-import SecurityIcon from '@mui/icons-material/Security';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import StorageIcon from '@mui/icons-material/Storage';
-
-const MotionCard = motion(Card);
+import React, { useEffect } from 'react';
+import Aos from 'aos';
+import 'aos/dist/aos.css';
+import { FaGithub } from 'react-icons/fa';
 
 const experiences = [
   {
@@ -15,179 +9,87 @@ const experiences = [
     company: "CRF, Indian Institute of Technology (IIT) Ropar",
     techStack: ["React.js", "Node.js", "Express.js", "JWT", "bcrypt", "Multer"],
     points: [
-      {
-        icon: <CodeIcon />,
-        text: "Architected full-stack web app using React.js, Node.js, and Express.js, improving user engagement by 40%"
-      },
-      {
-        icon: <SecurityIcon />,
-        text: "Engineered secure auth system using JWT and bcrypt, reducing unauthorized access"
-      },
-      {
-        icon: <StorageIcon />,
-        text: "Developed RESTful APIs for facility bookings and publications"
-      },
-      {
-        icon: <DashboardIcon />,
-        text: "Built a role-based admin dashboard with 10+ functional tabs; restricted access for sub-admins and enabled full content control for main admins"
-      }
+      "Architected a full-stack web application using <b>React.js</b>, <b>Node.js</b>, and <b>Express.js</b> for centralized research facility management",
+      "Implemented secure authentication using <b>JWT</b> and <b>bcrypt</b>, with support for role-based access control",
+      "Designed and built RESTful APIs for managing facility bookings, publications, and content updates",
+      "Developed a dynamic admin dashboard with support for two admin roles; enabled real-time editing of website components through the panel",
+      "Integrated <b>Multer</b> for efficient file upload and management in the backend"
     ],
     github: "https://github.com/SanyamGarg12/IIT-Ropar-Central-Research-Facilities"
   },
   {
     title: "Software Development Engineer Intern",
     company: "Velmenni Research & Development",
-    techStack: ["UI/UX", "CLI Tools", "Web Development"],
+    techStack: ["UI/UX", "CLI Tools", "Web Development", "C", "Python", "Bash", "Java"],
     points: [
-      {
-        icon: <DashboardIcon />,
-        text: "Enhanced UI/UX of Li-Fi network config dashboard, improving user interaction and data visualization"
-      },
-      {
-        icon: <CodeIcon />,
-        text: "Developed CLI tools for network management, integrating with main application software"
-      },
-      {
-        icon: <WorkIcon />,
-        text: "Extended website functionality by implementing features from main software"
-      }
+      "Worked on Velmenni’s proprietary SDK, including the main Spirit Config Tool (<b>Java</b>) and helper tools",
+      "Contributed to a web-based interface built using <b>HTML</b>, <b>CSS</b>, <b>JavaScript</b>, connected to a firmware-based backend written in <b>C</b> and <b>Python</b>",
+      "Used bash scripting to automate compilation of .c, .py, .txt, and frontend files into a single <b>.ftp</b> package, which was flashed to hardware for real-time updates",
+      "Integrated Java-based logic and variables from the config tool into the frontend for better consistency and functionality",
+      "Improved UI/UX design and implemented new features, while also fixing existing issues in the web platform",
+      "Gained hands-on experience with <b>embedded systems</b>, firmware flashing, and cross-language integration across <b>Java</b>, <b>C</b>, <b>Python</b>, <b>Bash</b>, and Web technologies"
     ]
   }
 ];
 
 const ExperienceCard = ({ experience, index }) => (
-  <MotionCard
-    elevation={3}
-    sx={{
-      mb: 4,
-      borderRadius: 4,
-      overflow: 'hidden',
-      transition: 'transform 0.3s ease-in-out',
-      '&:hover': {
-        transform: 'translateY(-8px)',
-      }
-    }}
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: index * 0.1 }}
+  <div
+    className="w-full bg-boxColor border-l-4 border-yellowColor rounded-lg shadow-lg p-6 mb-8 hover:shadow-2xl transition-shadow duration-300"
+    data-aos="fade-up"
+    data-aos-delay={index * 100}
   >
-    <CardContent sx={{ p: 4 }}>
-      <Typography
-        variant="h5"
-        component="h3"
-        sx={{
-          fontWeight: 700,
-          mb: 1,
-          background: 'linear-gradient(45deg, #2563eb 30%, #7c3aed 90%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}
-      >
-        {experience.title}
-      </Typography>
-      
-      <Typography
-        variant="h6"
-        color="text.secondary"
-        sx={{ mb: 2, fontWeight: 500 }}
-      >
-        {experience.company}
-      </Typography>
-
-      <Box sx={{ mb: 3, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-        {experience.techStack.map((tech) => (
-          <Chip
-            key={tech}
-            label={tech}
-            size="small"
-            sx={{
-              backgroundColor: 'primary.light',
-              color: 'white',
-              '&:hover': {
-                backgroundColor: 'primary.main',
-              }
-            }}
-          />
-        ))}
-      </Box>
-
-      <Box sx={{ pl: 2 }}>
-        {experience.points.map((point, idx) => (
-          <Box
-            key={idx}
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              mb: 2,
-              '&:last-child': { mb: 0 }
-            }}
-          >
-            <Box
-              sx={{
-                color: 'primary.main',
-                mr: 2,
-                mt: 0.5
-              }}
-            >
-              {point.icon}
-            </Box>
-            <Typography variant="body1" color="text.secondary">
-              {point.text}
-            </Typography>
-          </Box>
-        ))}
-      </Box>
-
+    <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
+      <div>
+        <h3 className="text-2xl font-bold text-white mb-1">{experience.title}</h3>
+        <p className="text-yellowColor font-semibold mb-2">{experience.company}</p>
+      </div>
       {experience.github && (
-        <Box sx={{ mt: 2, textAlign: 'right' }}>
-          <Typography
-            component="a"
-            href={experience.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={{
-              color: 'primary.main',
-              textDecoration: 'none',
-              '&:hover': {
-                textDecoration: 'underline'
-              }
-            }}
-          >
-            View on GitHub →
-          </Typography>
-        </Box>
+        <a
+          href={experience.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-yellowColor hover:text-white text-2xl mt-2 md:mt-0 transition-colors duration-300"
+        >
+          <FaGithub />
+        </a>
       )}
-    </CardContent>
-  </MotionCard>
+    </div>
+    <div className="flex flex-wrap gap-2 mb-4">
+      {experience.techStack.map((tech, techIndex) => (
+        <span
+          key={techIndex}
+          className="text-xs md:text-sm text-yellowColor border border-yellowColor rounded-full px-2 py-1 bg-black bg-opacity-30"
+        >
+          {tech}
+        </span>
+      ))}
+    </div>
+    <ul className="list-disc pl-5 space-y-2">
+      {experience.points.map((point, idx) => (
+        <li key={idx} className="text-gray-300 text-base leading-relaxed" dangerouslySetInnerHTML={{ __html: point }} />
+      ))}
+    </ul>
+  </div>
 );
 
 const Experience = () => {
-  return (
-    <Box id="experience" sx={{ mb: 6 }}>
-      <Typography
-        variant="h4"
-        component="h2"
-        gutterBottom
-        sx={{
-          fontWeight: 700,
-          mb: 4,
-          textAlign: 'center',
-          background: 'linear-gradient(45deg, #2563eb 30%, #7c3aed 90%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}
-      >
-        Work Experience
-      </Typography>
+  useEffect(() => {
+    Aos.init({ duration: 800, offset: 120 });
+  }, []);
 
-      <Grid container spacing={3}>
+  return (
+    <section id="experience" className="w-full py-20 border-b-[1px] border-b-black bg-bodyColor">
+      <div className="flex justify-center items-center text-center mb-12">
+        <h1 className="text-4xl font-bold text-white">
+          Work <span className="text-yellowColor">Experience</span>
+        </h1>
+      </div>
+      <div className="w-full max-w-4xl mx-auto">
         {experiences.map((experience, index) => (
-          <Grid item xs={12} key={index}>
-            <ExperienceCard experience={experience} index={index} />
-          </Grid>
+          <ExperienceCard key={index} experience={experience} index={index} />
         ))}
-      </Grid>
-    </Box>
+      </div>
+    </section>
   );
 };
 
