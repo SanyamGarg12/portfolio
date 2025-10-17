@@ -34,21 +34,48 @@ const experiences = [
 
 const ExperienceCard = ({ experience, index }) => (
   <div
-    className="w-full bg-boxColor border-l-4 border-yellowColor rounded-lg shadow-lg p-6 mb-8 hover:shadow-2xl transition-shadow duration-300"
+    className="relative w-full rounded-2xl p-[1px] mb-8 overflow-hidden"
+    style={{
+      background: 'linear-gradient(135deg, rgba(59,130,246,0.6), rgba(34,197,94,0.5))',
+      boxShadow: '0 20px 60px rgba(0,0,0,0.45)'
+    }}
     data-aos="fade-up"
     data-aos-delay={index * 100}
   >
+    <div
+      className="relative rounded-2xl bg-black/60 border border-gray-800 p-6 backdrop-blur-md transition-transform duration-300 h-full"
+      style={{ transformStyle: 'preserve-3d' }}
+      onMouseMove={(e) => {
+        const el = e.currentTarget;
+        const r = el.getBoundingClientRect();
+        const x = e.clientX - r.left; const y = e.clientY - r.top;
+        const rx = -((y - r.height/2) / (r.height/2)) * 10;
+        const ry = ((x - r.width/2) / (r.width/2)) * 10;
+        el.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.02,1.02,1)`;
+        const sheen = el.querySelector('.sheen');
+        if (sheen) {
+          sheen.style.opacity = '0.35';
+          sheen.style.transform = `translate(${(x - r.width/2) / 8}px, ${(y - r.height/2) / 8}px)`;
+        }
+      }}
+      onMouseLeave={(e) => { e.currentTarget.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1,1,1)'; const s=e.currentTarget.querySelector('.sheen'); if(s){s.style.opacity='0'; s.style.transform='translate(0,0)';}}}
+    >
+      <div className="pointer-events-none sheen absolute inset-[-40%] rounded-[20px]" style={{
+        background: 'radial-gradient(600px 200px at 50% 0%, rgba(34,197,94,0.25), rgba(34,197,94,0))',
+        transition: 'opacity 200ms ease, transform 200ms ease',
+        opacity: 0
+      }} />
     <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
       <div>
         <h3 className="text-2xl font-bold text-white mb-1">{experience.title}</h3>
-        <p className="text-yellowColor font-semibold mb-2">{experience.company}</p>
+        <p className="text-emerald-300 font-semibold mb-2">{experience.company}</p>
       </div>
       {experience.github && (
         <a
           href={experience.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-yellowColor hover:text-white text-2xl mt-2 md:mt-0 transition-colors duration-300"
+            className="text-sky-300 hover:text-white text-2xl mt-2 md:mt-0 transition-colors duration-300"
         >
           <FaGithub />
         </a>
@@ -58,7 +85,7 @@ const ExperienceCard = ({ experience, index }) => (
       {experience.techStack.map((tech, techIndex) => (
         <span
           key={techIndex}
-          className="text-xs md:text-sm text-yellowColor border border-yellowColor rounded-full px-2 py-1 bg-black bg-opacity-30"
+            className="text-xs md:text-sm text-emerald-300 border border-emerald-400/60 rounded-full px-2 py-1 bg-black/40"
         >
           {tech}
         </span>
@@ -69,6 +96,7 @@ const ExperienceCard = ({ experience, index }) => (
         <li key={idx} className="text-gray-300 text-base leading-relaxed" dangerouslySetInnerHTML={{ __html: point }} />
       ))}
     </ul>
+    </div>
   </div>
 );
 

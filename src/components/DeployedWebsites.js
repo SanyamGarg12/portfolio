@@ -34,10 +34,18 @@ const DeployedWebsites = () => (
       {deployedWebsites.map((site, idx) => (
         <div
           key={site.title}
-          className="bg-boxColor border-l-4 border-pink-400 rounded-lg shadow-lg p-6 flex flex-col gap-4 hover:shadow-2xl transition-shadow duration-300"
+          className="relative w-full rounded-2xl p-[1px] overflow-hidden h-full"
+          style={{ background: 'linear-gradient(135deg, rgba(236,72,153,0.6), rgba(59,130,246,0.5))', boxShadow:'0 20px 60px rgba(0,0,0,0.45)' }}
           data-aos="fade-up"
           data-aos-delay={idx * 100}
         >
+          <div
+            className="relative rounded-2xl bg-black/60 border border-gray-800 p-6 backdrop-blur-md transition-transform duration-300 flex flex-col gap-4 h-full"
+            style={{ transformStyle: 'preserve-3d' }}
+            onMouseMove={(e)=>{const el=e.currentTarget;const r=el.getBoundingClientRect();const x=e.clientX-r.left;const y=e.clientY-r.top;const rx=-((y-r.height/2)/(r.height/2))*10;const ry=((x-r.width/2)/(r.width/2))*10;el.style.transform=`perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.02,1.02,1)`;const s=el.querySelector('.sheen');if(s){s.style.opacity='0.35';s.style.transform=`translate(${(x-r.width/2)/8}px, ${(y-r.height/2)/8}px)`}}}
+            onMouseLeave={(e)=>{e.currentTarget.style.transform='perspective(1000px) rotateX(0) rotateY(0) scale3d(1,1,1)';const s=e.currentTarget.querySelector('.sheen'); if(s){s.style.opacity='0'; s.style.transform='translate(0,0)';}}}
+          >
+            <div className="pointer-events-none sheen absolute inset-[-40%] rounded-[20px]" style={{background:'radial-gradient(600px 200px at 50% 0%, rgba(236,72,153,0.25), rgba(236,72,153,0))', transition:'opacity 200ms ease, transform 200ms ease', opacity:0}} />
           <div className="flex items-center gap-3 mb-2">
             <h2 className="text-xl font-bold text-white">{site.title}</h2>
             <span className={`ml-auto px-3 py-1 rounded-full text-xs font-semibold text-white flex items-center gap-1 ${site.status.color}`}>
@@ -45,7 +53,7 @@ const DeployedWebsites = () => (
               {site.status.label}
             </span>
           </div>
-          <p className="text-gray-300 text-base mb-2">{site.description}</p>
+          <p className="text-gray-200 text-base mb-2">{site.description}</p>
           <div className="flex gap-4 mt-auto">
             {site.links.map((link, i) => (
               <a
@@ -58,6 +66,7 @@ const DeployedWebsites = () => (
                 {link.icon} {link.label}
               </a>
             ))}
+          </div>
           </div>
         </div>
       ))}
