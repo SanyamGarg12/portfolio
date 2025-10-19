@@ -389,7 +389,7 @@ const Home = () => {
   };
 
   return (
-    <section id="home" className="w-full min-h-[80vh] flex flex-col md:flex-row items-center justify-center bg-black relative overflow-hidden py-12 border-b-[1px] border-b-gray-800">
+    <section id="home" className="w-full min-h-[50vh] flex flex-col md:flex-row items-center justify-center bg-black relative overflow-hidden pt-4 pb-8 border-b-[1px] border-b-gray-800">
       {/* Interactive particles background (full page) */}
       <canvas
         ref={canvasRef}
@@ -397,7 +397,7 @@ const Home = () => {
         style={{ position: 'fixed', inset: 0, pointerEvents: 'none', background: 'transparent' }}
       />
       {/* Left: Image */}
-      <div className="w-full md:w-1/2 flex justify-center items-center z-10 mb-8 md:mb-0">
+      <div className="w-full md:w-1/2 flex justify-center items-start z-10 mb-8 md:mb-0 -mt-80">
         <div
           ref={tiltRef}
           onMouseMove={handleTilt}
@@ -406,14 +406,14 @@ const Home = () => {
           style={{ transition: 'transform 150ms ease-out', willChange: 'transform' }}
         >
           <img
-            className="w-56 h-56 md:w-80 md:h-80 rounded-xl object-cover"
+            className="w-64 h-100 md:w-96 md:h-96 rounded-xl object-cover"
             src={Sanyam}
             alt="Sanyam Garg"
           />
         </div>
       </div>
       {/* Right: Intro */}
-      <div className="w-full md:w-1/2 flex flex-col items-center md:items-start z-10 px-4">
+      <div className="w-full md:w-1/2 flex flex-col items-center md:items-start z-10 px-4 pt-0">
         <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">
           Hi, I'm <span className="text-blue-400">Sanyam</span>
         </h1>
@@ -436,6 +436,47 @@ const Home = () => {
             ))}
             <span className="text-white animate-blink">|</span>
           </pre>
+        </div>
+        
+        {/* Terminal Command Display */}
+        <div className="w-full max-w-xl bg-black/90 border border-gray-700 rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] p-6 mb-6 relative overflow-hidden"
+             style={{ transformStyle: 'preserve-3d' }}
+             onMouseMove={(e) => {
+               const el = e.currentTarget;
+               const r = el.getBoundingClientRect();
+               const x = e.clientX - r.left; const y = e.clientY - r.top;
+               const rx = -((y - r.height/2) / (r.height/2)) * 6;
+               const ry = ((x - r.width/2) / (r.width/2)) * 6;
+               el.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+             }}
+             onMouseLeave={(e) => { e.currentTarget.style.transform = 'perspective(800px) rotateX(0) rotateY(0)'; }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-cyan-500/10 rounded-xl" />
+          <div className="relative z-10">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="flex gap-1">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+              </div>
+              <span className="text-gray-400 text-sm font-mono">Terminal</span>
+            </div>
+            <div className="font-mono text-sm">
+              <div className="text-gray-300 mb-2">
+                <span className="text-green-400">$</span> Open your terminal and run:
+              </div>
+              <div className="bg-gray-800/50 rounded-lg p-3 border border-gray-600">
+                <div className="flex items-center gap-2">
+                  <span className="text-blue-400">npx</span>
+                  <span className="text-cyan-300">hello-sanyam</span>
+                  <span className="text-white animate-blink">|</span>
+                </div>
+              </div>
+              <div className="text-gray-400 text-xs mt-2 italic">
+                # Get to know me through an interactive CLI experience
+              </div>
+            </div>
+          </div>
         </div>
         <div className="w-full max-w-xl mb-6 p-5 rounded-2xl border border-gray-800/70 bg-black/55 backdrop-blur-md shadow-[0_12px_40px_rgba(0,0,0,0.45)]">
           <p className="text-gray-200 text-lg md:text-xl leading-relaxed mb-5 text-center md:text-left">
