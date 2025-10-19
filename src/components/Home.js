@@ -6,6 +6,7 @@ const codeLines = [
   'struct Developer {',
   '  std::string name = "Sanyam Garg";',
   '  std::string role = "Software Engineer";',
+  '  std::string email_id = "sanyam22448@iiitd.ac.in";',
   '  std::vector<std::string> skills = {',
   '    "Full Stack Developer",',
   '    "Machine Learning Engineer",',
@@ -397,19 +398,46 @@ const Home = () => {
         style={{ position: 'fixed', inset: 0, pointerEvents: 'none', background: 'transparent' }}
       />
       {/* Left: Image */}
-      <div className="w-full md:w-1/2 flex justify-center items-start z-10 mb-8 md:mb-0 -mt-80">
-        <div
-          ref={tiltRef}
-          onMouseMove={handleTilt}
-          onMouseLeave={resetTilt}
-          className="rounded-2xl border-4 border-gray-800 bg-gray-900 shadow-2xl"
-          style={{ transition: 'transform 150ms ease-out', willChange: 'transform' }}
-        >
-          <img
-            className="w-64 h-100 md:w-96 md:h-96 rounded-xl object-cover"
-            src={Sanyam}
-            alt="Sanyam Garg"
-          />
+      <div className="w-full md:w-1/2 flex justify-center items-start z-10 mb-8 md:mb-0 -mt-32">
+        <div className="relative group">
+          {/* Artistic Yellow Frame Layers */}
+          <div className="absolute -inset-4 bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 rounded-3xl blur-sm opacity-60 group-hover:opacity-80 transition-all duration-500"></div>
+          <div className="absolute -inset-2 bg-gradient-to-tr from-yellow-300 via-yellow-400 to-yellow-500 rounded-2xl blur-xs opacity-40 group-hover:opacity-60 transition-all duration-500"></div>
+          
+          {/* Golden Glow Effect */}
+          <div className="absolute -inset-6 bg-gradient-to-r from-yellow-200/20 via-yellow-300/30 to-yellow-400/20 rounded-full blur-xl animate-pulse"></div>
+          
+          {/* Main Photo Container */}
+          <div
+            ref={tiltRef}
+            onMouseMove={handleTilt}
+            onMouseLeave={resetTilt}
+            className="relative rounded-2xl border-4 border-yellow-400/80 bg-gradient-to-br from-yellow-50/10 to-yellow-100/5 shadow-[0_20px_60px_rgba(251,191,36,0.4)] backdrop-blur-sm"
+            style={{ transition: 'transform 150ms ease-out', willChange: 'transform' }}
+          >
+            {/* Inner Golden Border */}
+            <div className="absolute inset-1 rounded-xl border-2 border-yellow-300/60"></div>
+            
+            {/* Photo with Enhanced Styling */}
+            <img
+              className="w-64 h-100 md:w-96 md:h-96 rounded-xl object-cover relative z-10"
+              src={Sanyam}
+              alt="Sanyam Garg"
+            />
+            
+            {/* Floating Golden Particles */}
+            <div className="absolute -top-2 -right-2 w-3 h-3 bg-yellow-400 rounded-full animate-bounce [animation-delay:0s]"></div>
+            <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-yellow-300 rounded-full animate-bounce [animation-delay:0.5s]"></div>
+            <div className="absolute top-1/2 -right-3 w-1.5 h-1.5 bg-yellow-500 rounded-full animate-bounce [animation-delay:1s]"></div>
+            
+            {/* Artistic Corner Accents */}
+            <div className="absolute -top-1 -left-1 w-6 h-6 border-l-2 border-t-2 border-yellow-400 rounded-tl-lg"></div>
+            <div className="absolute -bottom-1 -right-1 w-6 h-6 border-r-2 border-b-2 border-yellow-400 rounded-br-lg"></div>
+          </div>
+          
+          {/* Outer Artistic Ring */}
+          <div className="absolute -inset-8 border border-yellow-300/30 rounded-full animate-spin [animation-duration:20s]"></div>
+          <div className="absolute -inset-12 border border-yellow-400/20 rounded-full animate-spin [animation-duration:30s] [animation-direction:reverse]"></div>
         </div>
       </div>
       {/* Right: Intro */}
@@ -478,35 +506,47 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="w-full max-w-xl mb-6 p-5 rounded-2xl border border-gray-800/70 bg-black/55 backdrop-blur-md shadow-[0_12px_40px_rgba(0,0,0,0.45)]">
-          <p className="text-gray-200 text-lg md:text-xl leading-relaxed mb-5 text-center md:text-left">
-            I build scalable web apps, craft ML solutions, and love solving real-world problems with code. Always learning, always building.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center sm:justify-start gap-4">
-            <a
-              href="#get-in-touch"
-              className="flex items-center gap-2 px-5 py-3 rounded-full bg-blue-500/90 hover:bg-blue-400 text-white font-mono shadow-lg transition"
-            >
-              <FaEnvelope /> Contact Me
-            </a>
-            <a
-              href={RESUME_URL}
-              download="Sanyam Resume.pdf"
-              className="flex items-center gap-2 px-5 py-3 rounded-full border border-green-400/80 text-green-300 hover:bg-green-400 hover:text-black font-mono transition shadow-lg"
-            >
-              <FaDownload /> Download Resume
-            </a>
-            <div className="flex items-center gap-4 ml-0 sm:ml-2">
-              <a href="https://linkedin.com/in/sanyam-garg-133179250/" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-white text-2xl">
-                <FaLinkedinIn />
-              </a>
-              <a href="https://github.com/SanyamGarg12" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-white text-2xl">
-                <FaGithub />
-              </a>
-            </div>
-          </div>
+      </div>
+      
+      {/* Fixed Left Side Panel */}
+      <div className="fixed left-0 top-1/2 transform -translate-y-1/2 z-50 hidden md:block">
+        <div className="flex flex-col gap-4 bg-gradient-to-b from-yellow-900/80 via-yellow-800/60 to-yellow-900/80 backdrop-blur-xl p-6 pl-8 shadow-[0_4px_20px_rgba(0,0,0,0.3)] border-4 border-yellow-500 hover:border-yellow-400 transition-all duration-300 rounded-l-2xl">
+          <a 
+            href="https://linkedin.com/in/sanyam-garg-133179250/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-blue-500/30 to-blue-600/20 hover:from-blue-400/50 hover:to-blue-500/40 rounded-2xl transition-all duration-300 hover:scale-110 hover:shadow-[0_8px_25px_rgba(59,130,246,0.4)]"
+            title="LinkedIn"
+          >
+            <FaLinkedinIn className="text-blue-300 text-2xl" />
+          </a>
+          <a 
+            href="https://github.com/SanyamGarg12" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-gray-500/30 to-gray-600/20 hover:from-gray-400/50 hover:to-gray-500/40 rounded-2xl transition-all duration-300 hover:scale-110 hover:shadow-[0_8px_25px_rgba(107,114,128,0.4)]"
+            title="GitHub"
+          >
+            <FaGithub className="text-gray-200 text-2xl" />
+          </a>
+          <a 
+            href="#get-in-touch" 
+            className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-green-500/30 to-green-600/20 hover:from-green-400/50 hover:to-green-500/40 rounded-2xl transition-all duration-300 hover:scale-110 hover:shadow-[0_8px_25px_rgba(34,197,94,0.4)]"
+            title="Contact"
+          >
+            <FaEnvelope className="text-green-300 text-2xl" />
+          </a>
+          <a 
+            href={RESUME_URL} 
+            download="Sanyam Resume.pdf" 
+            className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-purple-500/30 to-purple-600/20 hover:from-purple-400/50 hover:to-purple-500/40 rounded-2xl transition-all duration-300 hover:scale-110 hover:shadow-[0_8px_25px_rgba(168,85,247,0.4)]"
+            title="Download Resume"
+          >
+            <FaDownload className="text-purple-300 text-2xl" />
+          </a>
         </div>
       </div>
+      
       {/* Blinking cursor animation and dots keyframes */}
       <style>{`
         .animate-blink { animation: blink 1s steps(2, start) infinite; }

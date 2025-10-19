@@ -289,16 +289,16 @@ const Contact = () => {
       >
         Get in Touch
       </h2>
-      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-        <div className="flex items-center justify-center md:justify-end" data-aos="fade-up" data-aos-delay="80">
-          <div className="relative" style={{ width: '100%', maxWidth: 420 }}>
+      <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start px-4">
+        <div className="flex items-center justify-center lg:justify-end" data-aos="fade-up" data-aos-delay="80">
+          <div className="relative w-full max-w-md">
             <div className="absolute inset-0" style={{
               background: 'radial-gradient(closest-side, rgba(59,130,246,0.18), rgba(59,130,246,0))',
               filter: 'blur(10px)'
             }} />
             <canvas
               ref={globeCanvasRef}
-              className="relative"
+              className="relative w-full"
               style={{ cursor: 'grab', borderRadius: '9999px', background: 'transparent', filter: 'drop-shadow(0 14px 40px rgba(0,0,0,0.45))' }}
             />
             <div className="mt-6 flex justify-center">
@@ -306,18 +306,18 @@ const Contact = () => {
                 href={RESUME_URL}
                 download="Sanyam Resume.pdf"
                 aria-label="Download Resume"
-                className="resume-cta relative w-full max-w-lg overflow-hidden rounded-3xl text-white shadow-[0_24px_60px_rgba(0,0,0,0.55)]"
+                className="resume-cta relative w-full max-w-sm overflow-hidden rounded-3xl text-white shadow-[0_24px_60px_rgba(0,0,0,0.55)]"
               >
                 <span className="absolute inset-[-2px] rounded-3xl bg-gradient-to-r from-sky-500 via-indigo-500 to-emerald-400 opacity-80" />
-                <span className="relative block rounded-3xl bg-black/65 px-9 py-6 backdrop-blur-md">
-                  <span className="flex items-center justify-center gap-4">
-                    <span className="relative inline-flex h-12 w-12 items-center justify-center">
+                <span className="relative block rounded-3xl bg-black/65 px-6 py-4 backdrop-blur-md">
+                  <span className="flex items-center justify-center gap-3">
+                    <span className="relative inline-flex h-10 w-10 items-center justify-center">
                       <span className="absolute inset-0 rounded-full bg-sky-400/30 blur-md animate-pulse" />
-                      <span className="relative text-3xl">↓</span>
+                      <span className="relative text-2xl">↓</span>
                     </span>
-                    <span className="text-2xl md:text-3xl font-extrabold tracking-wide">Download Resume</span>
+                    <span className="text-xl font-extrabold tracking-wide">Download Resume</span>
                   </span>
-                  <span className="block pt-2 text-center text-sm text-sky-300/90">One click • PDF • Updated</span>
+                  <span className="block pt-1 text-center text-xs text-sky-300/90">One click • PDF • Updated</span>
                 </span>
                 <span className="resume-shine" />
                 <span className="resume-orb resume-orb-1" />
@@ -326,62 +326,70 @@ const Contact = () => {
             </div>
           </div>
         </div>
-        <div className="md:pl-4" data-aos="fade-up" data-aos-delay="120">
+        <div className="w-full" data-aos="fade-up" data-aos-delay="120">
           <p
-            className="text-gray-400 text-lg mb-8 max-w-xl text-center md:text-left"
-        data-aos="fade-up"
-        data-aos-delay="100"
-      >
+            className="text-gray-400 text-lg mb-8 text-center lg:text-left"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
             Whether you have an opportunity, a question, or just want to say hi, my inbox is always open. Drag the globe to roll it while you type!
-      </p>
+          </p>
           
-      <div className="relative rounded-2xl p-[1px] bg-gradient-to-br from-blue-500/30 via-indigo-500/20 to-emerald-400/30 shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
-      <form
-        ref={form}
-        onSubmit={sendEmail}
-          className="w-full max-w-lg rounded-2xl bg-gray-900/80 border border-gray-800 p-8 flex flex-col gap-6 backdrop-blur-md"
-      >
-          <label className="text-sm text-gray-400">Your Name</label>
-        <input
-          type="text"
-          name="user_name"
-            placeholder="Sanyam Garg"
-          required
-            className="w-full px-4 py-3 rounded-lg bg-black border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:border-transparent transition"
-        />
-          <label className="text-sm text-gray-400">Your Email</label>
-        <input
-          type="email"
-          name="user_email"
-            placeholder="sanyam22448@iiitd.ac.in"
-          required
-            className="w-full px-4 py-3 rounded-lg bg-black border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:border-transparent transition"
-        />
-          <label className="text-sm text-gray-400">Your Message</label>
-        <textarea
-            name="user_message"
-            placeholder="Say hello..."
-          required
-          rows={5}
-            className="w-full px-4 py-3 rounded-lg bg-black border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:border-transparent transition resize-none"
-          />
-        {/* Math CAPTCHA */}
-        <div className="flex flex-col gap-2">
-          <label className="text-gray-300 font-mono">Solve: {a} {op} {b} = ?</label>
-          <input
-            type="number"
-            value={userAnswer}
-            onChange={e => setUserAnswer(e.target.value)}
-            className="w-32 px-3 py-2 rounded bg-black border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-blue-400 transition"
-            required
-          />
-          {mathError && <span className="text-red-400 text-sm">{mathError}</span>}
-        </div>
-        <button
-          type="submit"
-          disabled={loading}
-          className="relative w-full py-3 rounded-lg bg-blue-500 text-white font-bold hover:bg-blue-600 transition disabled:opacity-60 disabled:cursor-not-allowed overflow-hidden"
-        >
+          <div className="relative rounded-2xl p-[1px] bg-gradient-to-br from-blue-500/30 via-indigo-500/20 to-emerald-400/30 shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
+            <form
+              ref={form}
+              onSubmit={sendEmail}
+              className="w-full rounded-2xl bg-gray-900/80 border border-gray-800 p-6 lg:p-8 flex flex-col gap-5 backdrop-blur-md"
+            >
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-300">Your Name</label>
+                <input
+                  type="text"
+                  name="user_name"
+                  placeholder="Sanyam Garg"
+                  required
+                  className="w-full px-4 py-3 rounded-lg bg-black/50 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:border-blue-400 transition-all duration-200"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-300">Your Email</label>
+                <input
+                  type="email"
+                  name="user_email"
+                  placeholder="sanyam22448@iiitd.ac.in"
+                  required
+                  className="w-full px-4 py-3 rounded-lg bg-black/50 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:border-blue-400 transition-all duration-200"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-300">Your Message</label>
+                <textarea
+                  name="user_message"
+                  placeholder="Say hello..."
+                  required
+                  rows={4}
+                  className="w-full px-4 py-3 rounded-lg bg-black/50 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:border-blue-400 transition-all duration-200 resize-none"
+                />
+              </div>
+              {/* Math CAPTCHA */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-300 font-mono">Solve: {a} {op} {b} = ?</label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="number"
+                    value={userAnswer}
+                    onChange={e => setUserAnswer(e.target.value)}
+                    className="w-24 px-3 py-2 rounded-lg bg-black/50 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:border-blue-400 transition-all duration-200"
+                    required
+                  />
+                  {mathError && <span className="text-red-400 text-sm">{mathError}</span>}
+                </div>
+              </div>
+              <button
+                type="submit"
+                disabled={loading}
+                className="relative w-full py-3 px-6 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold hover:from-blue-600 hover:to-blue-700 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed overflow-hidden shadow-lg hover:shadow-blue-500/25"
+              >
           <span className={loading ? 'opacity-0' : 'opacity-100'}>Send</span>
           {loading && (
             <span className="absolute inset-0 flex items-center justify-center gap-2">
